@@ -2,34 +2,22 @@ import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Imagem from '../Imagens/transparente.png';
-import { GrBook, GrPersonalComputer, GrMailOption } from "react-icons/gr";
-import { AiOutlineTeam } from "react-icons/ai";
 import '../../StyleComponents/Header.css';
 
 function index() {
   return (
-    <Navbar bg="white" expand="lg">
-      <Container >
-        <img className="HeaderLogo" src={Imagem} />
-        <Navbar.Brand href="#home"><Link to='/' className='HeaderLink'>INTEC</Link></Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+    <>
+      <Navbar bg="white" expand="lg" className='cont-nav'>
+      <Link to='/' className="HeaderLogo"><img className="HeaderLogo" src={Imagem} /></Link>
+        <Container className='justify_tittle' >
+          <Link to='/' className='HeaderLink'><h4 className='HeaderLink'>INTEC</h4></Link>
+        </Container>
+        <Nav.Link> <Link to='/Login' className='Header-cad'>Login</Link> </Nav.Link>
+        <Nav.Link> <Link to='/Cadastro' className='Header-log'>Cadastrar</Link> </Nav.Link>
+      </Navbar>
 
-          <GrBook className='HeaderLogo' />
-          <Nav.Link> <Link to='/' className='HeaderLink'>Biblioteca</Link> </Nav.Link>
 
-          <GrPersonalComputer className='HeaderLogo' />
-          <Nav.Link> <Link to='/' className='HeaderLink'>Laboratorio</Link> </Nav.Link>
-
-          <GrMailOption className='HeaderLogo' />
-          <Nav.Link> <Link to='/' className='HeaderLink'>Secretaria</Link> </Nav.Link>
-
-          <AiOutlineTeam className='HeaderLogo' />
-          <Nav.Link> <Link to='/' className='HeaderLink'>Alunos e Professores</Link> </Nav.Link>
-
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    </>
   )
 }
 

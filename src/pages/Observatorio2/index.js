@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from 'react-bootstrap';
-import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import Adicoes from '../../components/ObservatorioDetalhes/index.js';
+import Btn from '../../components/BotaoFlutuante';
 import TextArea from '../../components/TextArea/index.js';
-import { adicoes } from './Adicoes.js';
-import '../../styles/observatorio.css';
+import Img from '../../components/Imagens/branco.png';
+import '../../styles/observatorio2.css';
 import '../../styles/main.css';
 import api from '../../config/configApi.js'
 
@@ -13,7 +12,6 @@ import api from '../../config/configApi.js'
 function Index() {
 
   const [image, setImage] = useState('');
-  const [endImg] = useState('../../../logo192.png');
   const [status, setStatus] = useState({
     type: '',
     mensagem: ''
@@ -48,70 +46,64 @@ function Index() {
           });
         }
       });
-      }
+  }
   const [data, setData] = useState([]);
   const [url, setUrl] = useState('');
 
   const getImages = async () => {
 
     await api.get("/list-image")
-    .then((response) => {
-      console.log(response.data);
-      setData(response.data.images);
-      setUrl(response.data.url);
-    }).catch((err) => {
-      console.log(err.response);
-    })
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data.images);
+        setUrl(response.data.url);
+      }).catch((err) => {
+        console.log(err.response);
+      })
   }
 
   useEffect(() => {
     getImages();
-  },[]); 
-  
-return (
-  <div className='linha'>
-    <main>
-      <header>
-        {status.type === 'success' ? <p style={{ color: "green" }}>{status.mensagem}</p> : ""}
-        {status.type === 'error' ? <p style={{ color: "#ff0000" }}>{status.mensagem}</p> : ""}
+  }, []);
 
-        <form onSubmit={UploadImage} className='upload'>
-          <label >Imagem: </label>
-          <input type="file" name="image" className='btnMargin' onChange={e => setImage(e.target.files[0])} /><br /><br />
+  return (
+    <>
+      <Btn />
+      <div className='contanier-obs2'>
+        <h1 className='IntecObs'>INTEC OBSERVATÓRIO</h1>
+        <header className='header-obs2'>
+          {status.type === 'success' ? <alert style={{ color: "#fff" }}>{status.mensagem}</alert> : ""}
+          {status.type === 'error' ? < alert style={{ color: "#ff0000" }}>{status.mensagem}</alert> : ""}
 
-          {image ? <img src={URL.createObjectURL(image)} alt="Imagem" width="150" height="150" /> : <img src={endImg} alt="Imagem" width="150" height="150" />}
+          <form onSubmit={UploadImage} className='form-upload'>
+            <label for="inputTag" className="label-upload">
+              <p>Clique aqui</p>
+              {image ? <img src={URL.createObjectURL(image)} alt="Imagem" width="150" height="150" /> : <img src={Img} alt="Imagem" className='upload-img' />}
+              <p>Para adicionar uma imagem</p>
+              <input id="inputTag" type="file" onChange={e => setImage(e.target.files[0])} />
+            </label>
+            <Button variant="primary" type="submit" >Cofirmar envio</Button>
+          </form>
+        </header>
+        <main>
+          <Container fluid >
+            <div className="img">
 
-          <Button variant="outline-secondary" type="submit" className='btnMargin' >
-            Adicionar documento
-          </Button>
-        </form>
-      </header>
-      <Container fluid >
-        {/* <Row xs={1} md={3} >
-            {adicoes.map(item => {
-              return (
-                <Adicoes
-                  src = {item.src}
-                />
-              );
-            })}
-          </Row> */}
-        <div className="img">
-        
-          {data.map(image => (
-            <div key={image.id}>
-              <img src={url + image.image} alt={image.id} width="150" />
-              <hr />
+              {data.map(image => (
+                <div key={image.id}>
+                  <img src={url + image.image} alt={image.id} width="150" />
+                  <hr />
+                </div>
+              ))}
+
             </div>
-          ))}
+          </Container>
+          <TextArea />
+        </main>
+      </div>
+    </>
+  );
 
-        </div>
-      </Container>
-      <TextArea />
-    </main>
-  </div>
-);
-  
 }
 
 
