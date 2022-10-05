@@ -8,6 +8,10 @@ import '../../styles/observatorio2.css';
 import '../../styles/main.css';
 import api from '../../config/configApi.js'
 
+ 
+function refreshPage() {
+  window.location.reload(false);
+}
 
 function Index() {
 
@@ -46,6 +50,7 @@ function Index() {
           });
         }
       });
+     
   }
   const [data, setData] = useState([]);
   const [url, setUrl] = useState('');
@@ -80,9 +85,9 @@ function Index() {
               <p>Clique aqui</p>
               {image ? <img src={URL.createObjectURL(image)} alt="Imagem" width="150" height="150" /> : <img src={Img} alt="Imagem" className='upload-img' />}
               <p>Para adicionar uma imagem</p>
-              <input id="inputTag" type="file" onChange={e => setImage(e.target.files[0])} />
+              <input id="inputTag" type="file" onChange={e => setImage(e.target.files[0])}/>
             </label>
-            <Button variant="primary" type="submit" >Cofirmar envio</Button>
+            <Button variant="primary" type="submit"  onClick={refreshPage}>Cofirmar envio </Button>
           </form>
         </header>
         <main>
